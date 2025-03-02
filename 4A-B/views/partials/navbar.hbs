@@ -1,0 +1,28 @@
+
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            {{#if logged}}
+            <li class="nav-item">
+              <form  action="/logout" method="post">
+                <button type="submit" class="nav-link">
+                  Log Out 
+                </button>
+              </form>
+            </li>
+            {{else}}
+            <li class="nav-item">
+              <a class="nav-link {{#if (equal currentPage 'Login')}} active {{/if}}" aria-current="page"
+                 href="/login">Log in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{#if (equal currentPage 'Register')}} active {{/if}}" aria-current="page"
+                 href="/register">Register</a>
+            </li>
+            {{/if}}
+          </ul>
+        </div>
+      </div>
+    </nav>
