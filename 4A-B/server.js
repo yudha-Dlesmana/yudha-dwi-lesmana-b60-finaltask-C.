@@ -7,7 +7,7 @@ const session   = require ( 'express-session' );
 const{
     authStatus,
     checkAuth
-}               = require( './middleware/auth')
+} = require( './middleware/auth')
 
 const {
     renderRegisterPage,
@@ -15,7 +15,13 @@ const {
     renderLoginPage,
     authLogIn,
     authLogOut,
-}               = require( './controller/authController' )
+} = require( './controller/authController' )
+
+const {
+    renderCollectionsPage,
+    renderAddCollectionsPage,
+    addCollection,
+} = require('./controller/collectionsController')
 
 const port = process.env.SERVER_PORT || 8000;
 
@@ -42,6 +48,7 @@ hbs.registerHelper('equal', (a, b) =>{
 })
 
 // router
+
 // auth
 server.get('/login', checkAuth(false),  renderLoginPage);
 server.post('/login', checkAuth(false), authLogIn)
@@ -50,6 +57,15 @@ server.get('/register', checkAuth(false), renderRegisterPage);
 server.post('/register', checkAuth(false), authRegister);
 
 server.post('/logout', authLogOut)
+
+// collections
+server.get('/collections', renderCollectionsPage);
+
+server.get('/add-collection', renderAddCollectionsPage);
+server.post('/add-collection', addCollection)
+
+
+
 
 server.listen(port, () => {
     console.log(`web-task-collections on port ${port}`)

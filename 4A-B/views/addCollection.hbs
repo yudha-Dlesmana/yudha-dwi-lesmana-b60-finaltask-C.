@@ -1,0 +1,46 @@
+{{#>layout}}
+
+    <form class="form-field"  action="/add-collection" method="post">
+        <h1>
+            Add Collection and Task
+        </h1>
+        <div class="mb-3">
+            <input class="form-control form-control-lg"type="text" 
+            name="collection" placeholder="Collection" required>
+        </div>
+        <div id="taskList" class="mb-2">
+            <div class="input-group mb-2">
+                <input class="form-control" type="text"
+                name="taskList[]"  placeholder="Add Task">
+                <button type="button" class="btn btn-danger remove-task">X</button>
+            </div>
+        </div>
+
+        <button type="button" id="addTaskBtn" class="form-control form-control-lg btn btn-outline-primary">+ Add Task</button>
+
+        <div class="d-flex justify-content-center mt-4">
+            <button type="submit" class="btn btn-primary custom-btn">submit</button>
+        </div> 
+    </form>
+    <script>
+        // tambah form add task
+        document.getElementById('addTaskBtn').addEventListener('click', function(){
+            let taskDiv = document.createElement('div');
+            taskDiv.classList.add('input-group', 'mb-2');
+
+            taskDiv.innerHTML = `
+            <input type="text" class="form-control" name="taskList[]" placeholder="Add Task">
+            <button type="button" class="btn btn-danger remove-task">X</button>
+            `;
+            document.getElementById("taskList").appendChild(taskDiv);
+        })
+
+        // hapus form add task
+        document.getElementById('taskList').addEventListener('click', function(event){
+            if(event.target.classList.contains('remove-task')){
+                event.target.parentElement.remove()
+            }
+        })
+        
+    </script>
+{{/layout}}

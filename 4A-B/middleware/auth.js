@@ -10,7 +10,7 @@ function checkAuth(requireLogin){
             }
         } else{
             if(req.session.user){
-                return res.redirect('/dashboard') // sudah login
+                return res.redirect('/collections') // sudah login
             }
         }
         next()

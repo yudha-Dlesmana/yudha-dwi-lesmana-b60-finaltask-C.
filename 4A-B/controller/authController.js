@@ -16,7 +16,7 @@ async function authLogIn(req, res) {
     })
     if(!user){
         req.flash('incorrect', 'Email not registered')
-        return res.redirect('/dashboard')
+        return res.redirect('/login')
     }
 
     const isValid = await bcrypt.compare(password, user.password)
@@ -30,11 +30,10 @@ async function authLogIn(req, res) {
     delete loggedUser.password; // hapus password yang terbawa dari db
 
     req.session.user = loggedUser;
-    res.redirect('/register');
+    res.redirect('/collections')
 }
 
 function renderRegisterPage(req, res){
-    console.log(res.locals.logged)
     res.render('register')
 }
 async function authRegister(req, res){
@@ -63,7 +62,6 @@ async function authRegister(req, res){
     // check if password n confirmation password match
     if (password != confirmPassword){
         req.flash('failed', 'Password and confirmation do not match')
-        console.log(req.session.flash)
         return res.redirect('/register')
     }
 
