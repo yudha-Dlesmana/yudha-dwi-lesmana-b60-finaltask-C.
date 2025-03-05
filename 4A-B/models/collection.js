@@ -11,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Collection.belongsTo(models.User, { foreignKey: 'user_id' })
-      Collection.hasMany(models.Task, { foreignKey: 'collection_id', onDelete: 'CASCADE' })
+      Collection.belongsTo(models.User, { foreignKey: 'user_id', as: 'user'})
+      Collection.hasMany(models.Task, { foreignKey: 'collection_id', as: 'tasks', onDelete: 'CASCADE' });
+
     }
   }
   Collection.init({

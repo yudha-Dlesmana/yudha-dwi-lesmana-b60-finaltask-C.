@@ -1,0 +1,52 @@
+{{#>layout}}
+
+    <div class="d-flex justify-content-between align-items-center form-field">
+    <h2>{{collectionStats.collection.name}}</h2>
+    {{#if (equal user.id collectionStats.collection.user_id)}}
+    <form action="/delete-collection/{{collectionStats.collection_id}}?_method=DELETE" method="post">
+        <button onclick="deleteConfirm(event)" class="btn btn-danger w-100">Delete</button>
+    </form>
+    {{/if}}
+    </div>
+
+    <form class="form-field" action="/update-collection/{{collectionStats.collection_id}}?_method=PATCH" method="post">
+        <input name="collectionName" type="text" class="form-control" value="{{collectionStats.collection.name}}">
+        <div class="mt-3 mb-1">
+            <h6>tasks - {{collectionStats.notDone_count}}</h6>
+        </div>
+        <div id="taskList" class="mb-2">
+            {{#each notDoneTask}}
+            <div class="input-group mb-3">
+                <input name="taskList[]" type="text" class="form-control" value="{{this.name}}">
+                <div class="input-group-text">
+                    <input type="hidden" name="is_done" value="false" id="hiddenIsDone">
+                    <input type="checkbox" name="is_done" value="true" onchange="toggleHiddenInput(this)">
+                </div>
+            </div>
+            {{/each}}
+        </div>
+
+        <div class="mt-3 mb-1">
+            <h6>completed - {{collectionStats.done_count}}</h6>
+        </div>
+        <div id="completedList" class="mb-2">
+            {{#each doneTask}}
+            <div class="input-group mb-3">
+                <input name="name" type="text" class="form-control" value="{{this.name}}">
+                <div id="isDoneForm" class="input-group-text">
+                    <input name="is_done" type="hidden" value="{{this.is_done}}">   
+                    <input name="is_done" type="checkbox" class="form-check-input mt-0"  value="true">
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{#if (equal user.id collectionStats.collection.user_id)}}
+        <div class="d-flex justify-content-center mt-4">
+            <button type="submit" class="btn btn-primary custom-btn">Update</button>
+        </div>
+        {{/if}}
+    </form>
+    <script>
+        
+    </script>
+{{/layout}}

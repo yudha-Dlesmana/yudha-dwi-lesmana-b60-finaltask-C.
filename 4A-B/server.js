@@ -3,6 +3,7 @@ const hbs       = require ( 'hbs' );
 const path      = require ( 'path' );
 const flash     = require ( 'express-flash' );
 const session   = require ( 'express-session' );
+const methodOverride = require( 'method-override' )
 
 const{
     authStatus,
@@ -21,6 +22,9 @@ const {
     renderCollectionsPage,
     renderAddCollectionsPage,
     addCollection,
+    renderUpdateCollectionPage,
+    updateCollection,
+    deleteCollection
 } = require('./controller/collectionsController')
 
 const port = process.env.SERVER_PORT || 8000;
@@ -31,6 +35,7 @@ server.set( '/views', path.join(__dirname, './views'));
 server.use( '/assets', express.static(path.join(__dirname, './assets')));
 server.use( express.urlencoded({extended: true}) );
 server.use( express.json() );
+server.use( methodOverride( '_method' ))
 server.use( 
     session({
         name: 'ScwpAopJ',
@@ -42,9 +47,13 @@ server.use(
 server.use( flash() );
 server.use( authStatus );
 
+// partials dan helper 
 hbs.registerPartials(`${__dirname}/views/partials`, function(err){})
 hbs.registerHelper('equal', (a, b) =>{
     return a === b
+})
+hbs .registerHelper('json', function(content){
+    return JSON.stringify(content, null, 2)
 })
 
 // router
@@ -61,11 +70,13 @@ server.post('/logout', authLogOut)
 // collections
 server.get('/collections', renderCollectionsPage);
 
-server.get('/add-collection', renderAddCollectionsPage);
-server.post('/add-collection', addCollection)
+server.get('/add-collection', checkAuth(true), renderAddCollectionsPage);
+server.post('/add-collection', checkAuth(true), addCollection);
 
+server.get('/update-collection/:id', renderUpdateCollectionPage);
+server.patch('/update-collection/:id', checkAuth(true), updateCollection);
 
-
+server.delete('/delete-collection/:id', checkAuth(true), deleteCollection);
 
 server.listen(port, () => {
     console.log(`web-task-collections on port ${port}`)
