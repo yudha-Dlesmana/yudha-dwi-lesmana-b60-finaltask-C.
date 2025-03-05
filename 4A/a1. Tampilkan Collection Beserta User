@@ -1,0 +1,3 @@
+SELECT a.id, a.name, a.user_id, b.username, b.email FROM public.collections_tb as a
+join users_tb as b on a.user_id = b.id
+order by a.id

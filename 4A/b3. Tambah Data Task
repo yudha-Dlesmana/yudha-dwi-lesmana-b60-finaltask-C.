@@ -1,0 +1,6 @@
+INSERT INTO public.tasks_tb(
+	name, is_done, collection_id)
+	VALUES ('project1', true, 7 ),
+	('project2', true, 7 ),
+	('project3', false, 7 ),
+	('project4', false, 7 );

@@ -1,0 +1,3 @@
+SELECT * FROM public.tasks_tb
+where collection_id = 8
+ORDER BY id ASC 

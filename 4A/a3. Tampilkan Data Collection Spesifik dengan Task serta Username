@@ -1,0 +1,5 @@
+SELECT a.name, b.name, b.is_done, c.username FROM public.collections_tb as a
+join tasks_tb as b on b.collection_id = a.id
+join users_tb as c on c.id = a.user_id
+where a.name = 'Final Test Preparation lagi'
+ORDER BY a.id ASC 
